@@ -7,14 +7,13 @@
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
   <!-- angular material stylesheet -->
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+  <!-- custom stylesheet -->
+  <link rel="stylesheet" href="/css/style.css" media="screen" title="no title" charset="utf-8">
 </head>
 
 <body>
-  <md-toolbar class="md-whiteframe-1dp md-tall">
-    <div class="md-toolbar-tools">
-      Unote
-    </div>
-  </md-toolbar>
+
+  <ui-view></ui-view>
 
   <!-- angular js -->
   <script src="bower_components/angular/angular.js"></script>
@@ -24,7 +23,7 @@
   <script src="bower_components/angular-aria/angular-aria.js"></script>
   <script src="bower_components/angular-messages/angular-messages.js"></script>
   <script src="bower_components/angular-material/angular-material.js"></script>
-  
+
   <!-- ui-router -->
   <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
