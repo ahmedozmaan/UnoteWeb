@@ -1,0 +1,22 @@
+{
+  "name": "unote-web-admin",
+  "homepage": "https://github.com/ducaale/Unote",
+  "authors": [
+    "maxamed daahir <Ducale@Own.(none)>"
+  ],
+  "description": "university note webadmin",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "^1.0.7",
+    "angular-ui-router": "^0.2.18"
+  }
+}
