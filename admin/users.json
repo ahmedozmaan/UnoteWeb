@@ -1,0 +1,37 @@
+  [{
+    "user_id": 1,
+    "name": "axmed",
+    "email": "aa@aa.com",
+    "phone": "123-123-122",
+    "class": "BCS1"
+  }, {
+    "user_id": 2,
+    "name": "cali",
+    "email": "aa@aa.com",
+    "phone": "123-123-122",
+    "class": "BCS1"
+  }, {
+    "user_id": 3,
+    "name": "maxamed",
+    "email": "aa@aa.com",
+    "phone": "123-123-122",
+    "class": "BCS1"
+  }, {
+    "user_id": 4,
+    "name": "cabdale",
+    "email": "aa@aa.com",
+    "phone": "123-123-122",
+    "class": "BCS1"
+  }, {
+    "user_id": 5,
+    "name": "xuseen",
+    "email": "aa@aa.com",
+    "phone": "123-123-122",
+    "class": "BCS1"
+  }, {
+    "user_id": 6,
+    "name": "muse",
+    "email": "aa@aa.com",
+    "phone": "123-123-122",
+    "class": "BCS1"
+  }]

@@ -4,11 +4,13 @@
 <head>
   <title>unote webadmin</title>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
+  <meta name="viewport" content="width=device-width"/>
   <!-- angular material stylesheet -->
-  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
+  <!-- angular material table stylesheet -->
+  <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.css"/>
   <!-- custom stylesheet -->
-  <link rel="stylesheet" href="/css/style.css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/css/style.css" media="screen" title="no title" charset="utf-8"/>
 </head>
 
 <body>
@@ -17,6 +19,8 @@
 
   <!-- angular js -->
   <script src="bower_components/angular/angular.js"></script>
+  <!-- ngResouce -->
+  <script src="bower_components/angular-resource/angular-resource.min.js"></script>
 
   <!-- angular material and its Dependencies -->
   <script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -27,8 +31,17 @@
   <!-- ui-router -->
   <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
+  <!-- angular material table -->
+  <script src="bower_components/angular-material-data-table/dist/md-data-table.js"></script>
+
   <!-- our main module -->
   <script src="app.module.js"></script>
+
+  <!-- users -->
+  <script src="users/users.module.js"></script>
+  <script src="users/controllers/students.ctrl.js"></script>
+  <script src="users/controllers/teachers.ctrl.js"></script>
+  <script src="users/services/users.service.js"></script>
 
 </body>
 
