@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module("unoteAdmin", ['ngMaterial','ui.router'])
+    .module("unoteAdmin", ['ngResource', 'ngMaterial','ui.router', 'md.data.table', 'users'])
 
     .config(function($stateProvider, $urlRouterProvider){
 
@@ -11,21 +11,26 @@
       $stateProvider
         .state('home',{
           url: '/home',
-          templateUrl:'partials/home.html'
+          templateUrl:'users/partials/home.html'
         })
         .state('home.students',{
           url: '/students',
-          templateUrl: 'partials/students.html'
+          templateUrl: 'users/partials/students.html',
+          controllerAs: 'vm',
+          controller: 'studentsCtrl'
         })
         .state('home.teachers',{
           url: '/teachers',
-          templateUrl: 'partials/teachers.html'
+          templateUrl: 'users/partials/teachers.html',
+          controllerAs: 'vm',
+          controller: 'teachersCtrl'
         })
     })
 
     .config(['$mdIconProvider', function($mdIconProvider){
-      $mdIconProvider.
-        icon("menu", "/css/svg/ic_menu_white_24px.svg", 24)
+      $mdIconProvider
+        .icon("menu", "/css/svg/ic_menu_white_24px.svg", 24)
+        .icon("add", "/css/svg/ic_add_white_24px.svg", 24)
     }])
 
 })();
