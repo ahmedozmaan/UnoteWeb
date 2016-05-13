@@ -6,12 +6,14 @@
 
     .config(function($stateProvider, $urlRouterProvider){
 
-      $urlRouterProvider.otherwise('/home');
+      $urlRouterProvider.otherwise('/students');
 
       $stateProvider
         .state('home',{
           url: '/home',
-          templateUrl:'users/partials/home.html'
+          templateUrl:'users/partials/home.html',
+          controllerAs: "vm",
+          controller: 'usersCtrl'
         })
         .state('home.students',{
           url: '/students',
