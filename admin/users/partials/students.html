@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody md-body>
-        <tr md-row ng-repeat="student in vm.students">
+        <tr md-row ng-repeat="student in vm.students | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
           <td md-cell>{{student.user_id}}</td>
           <td md-cell>{{student.name}}</td>
           <td md-cell>{{student.email}}</td>
@@ -27,4 +27,10 @@
       </tbody>
     </table>
   </md-table-container>
+  <md-table-pagination md-limit="vm.query.limit" md-limit-options="[5,10,15]" md-page="vm.query.page" md-total="{{vm.students.length}}" md-page-select=true></md-table-pagination>
 </md-card>
+</md-card>
+
+<md-button class="md-fab md-fab-bottom-right" aria-label="add">
+  <md-icon md-svg-icon="add"></md-icon>
+</md-button>

@@ -8,3 +8,8 @@ bottom: 20px;
 left: auto;
 position: fixed;
 }
+md-list .md-button {
+  width: 100%;
+  text-align: left;
+  text-transform: capitalize;;
+}
