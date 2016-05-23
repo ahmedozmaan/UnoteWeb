@@ -3,14 +3,14 @@
 
   angular
     .module('unoteAdmin')
-    .directive('sidenav', sidenav)
+    .directive('toolbar', toolbar)
 
-  function sidenav() {
+  function toolbar() {
     return {
       restrict: 'E',
       scope: {},
-      templateUrl: 'sidenav/sidenav.html',
-      controller: 'sidenavCtrl',
+      templateUrl: 'toolbar/toolbar.html',
+      controller: 'toolbarCtrl',
         controllerAs: 'vm',
     }
   }

@@ -1,15 +1,36 @@
-toolbar.title{
-  padding-left: 24px;
+.title.md-display-3 {
+  margin-left: 72px;
+  padding-bottom: 16px;
 }
 .md-button.md-fab.md-fab-bottom-right {
-top: auto;
-right: 20px;
-bottom: 20px;
-left: auto;
-position: fixed;
+  bottom: 20px;
+  right: 20px;
+  top: auto;
+  left: auto;
+  position: fixed;
 }
 md-list .md-button {
   width: 100%;
   text-align: left;
-  text-transform: capitalize;;
+  text-transform: capitalize;
+  margin: 0px;
+  padding-left: 16px;
+  border-radius: 0px;
+}
+md-sidenav > md-toolbar {
+  height: 180px;
+}
+
+@media screen and (min-width: 840px) {
+  #main {
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+  .md-button.md-fab.md-fab-bottom-right {
+    bottom: auto;
+    right: 30px;
+    top: 90px;
+    left: auto;
+    position: fixed;
+  }
 }

@@ -1,0 +1,32 @@
+<md-card>
+  <md-toolbar class="md-table-toolbar md-default">
+    <div class="md-toolbar-tools">
+      <span>Classes</span>
+    </div>
+  </md-toolbar>
+
+  <md-table-container>
+    <table md-table>
+      <thead md-head>
+        <tr md-row>
+          <th md-column>Class</th>
+          <th md-column>Faculty</th>
+          <th md-column>Level</th>
+        </tr>
+      </thead>
+      <tbody md-body>
+        <tr md-row ng-repeat="class in vm.classes | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
+          <td md-cell>{{class.name}}</td>
+          <td md-cell>{{class.faculty}}</td>
+          <td md-cell>{{class.level}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </md-table-container>
+  <md-table-pagination md-limit="vm.query.limit" md-limit-options="[5,10,15]" md-page="vm.query.page" md-total="{{vm.classes.length}}" md-page-select=true></md-table-pagination>
+</md-card>
+</md-card>
+
+<md-button class="md-fab md-fab-bottom-right" aria-label="add" ng-click="vm.create()">
+  <md-icon md-svg-icon="add"></md-icon>
+</md-button>

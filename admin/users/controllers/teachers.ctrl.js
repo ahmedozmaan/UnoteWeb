@@ -5,7 +5,7 @@
     .module("users")
     .controller("teachersCtrl", teachersCtrl);
 
-  function teachersCtrl(User) {
+  function teachersCtrl($mdDialog, User) {
     var vm = this;
     vm.teachers = [];
     vm.query = {
@@ -16,6 +16,15 @@
     User.query().$promise.then(function(data) {
       vm.teachers = data;
     })
+
+    vm.create = function() {
+      $mdDialog.show({
+        templateUrl: 'users/partials/createTeacher.dialog.html',
+        controller:'createTeacherDialog',
+        controllerAs: 'vm',
+        clickOutsideToClose:true
+      })
+    }
 
   }
 

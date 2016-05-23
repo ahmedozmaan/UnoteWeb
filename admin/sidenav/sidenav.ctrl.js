@@ -5,13 +5,18 @@
     .module("unoteAdmin")
     .controller("sidenavCtrl", sidenavCtrl)
 
-  function sidenavCtrl() {
+  function sidenavCtrl($mdSidenav) {
     var vm = this;
     vm.urls = [
-      {"name": "Users"},
-      {"name": "classes"},
-      {"name": "chatrooms"}
+      {"name": "students", "state": ".students"},
+      {"name": "teachers", "state": ".teachers"},
+      {"name": "classes", "state": ".classes"},
+      {"name": "chatrooms", "state": ".chatrooms"}
     ];
+
+    vm.close = function() {
+      $mdSidenav('left').toggle();
+    }
 
   }
 
