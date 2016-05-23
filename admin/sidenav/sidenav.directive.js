@@ -8,16 +8,10 @@
   function sidenav() {
     return {
       restrict: 'E',
+      scope: {},
       templateUrl: 'sidenav/sidenav.html',
-    //  controllerAs: 'vm',
-      controller: function() {
-          var vm = this;
-          vm.urls = [
-            {"name": "Users"},
-            {"name": "classes"},
-            {"name": "chatrooms"}
-          ];
-        }
+      controller: 'sidenavCtrl',
+        controllerAs: 'vm',
     }
   }
 
