@@ -1,0 +1,20 @@
+<md-dialog>
+  <md-dialog-content class="md-padding">
+      <md-input-container class="md-block">
+        <label>Name</label>
+        <input type="text" ng-model="vm.teacher.name"/>
+      </md-input-container>
+      <md-input-container class="md-block" flex>
+        <label>Phone Number</label>
+        <input type="text" ng-model="vm.teacher.phone"/>
+      </md-input-container>
+      <md-input-container class="md-block" flex>
+        <label>Email</label>
+        <input type="email" ng-model="vm.teacher.email"/>
+      </md-input-container>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button class="md-primary" ng-click="vm.cancel()">cancel</md-button>
+    <md-button class="md-primary" ng-click="vm.save()">create</md-button>
+  </md-dialog-actions>
+</md-dialog>

@@ -28,6 +28,6 @@
   <md-table-pagination md-limit="vm.query.limit" md-limit-options="[5,10,15]" md-page="vm.query.page" md-total="{{vm.teachers.length}}" md-page-select=true></md-table-pagination>
 </md-card>
 
-<md-button class="md-fab md-fab-bottom-right" aria-label="add">
+<md-button class="md-fab md-fab-bottom-right" aria-label="add" ng-click="vm.create()">
   <md-icon md-svg-icon="add"></md-icon>
 </md-button>

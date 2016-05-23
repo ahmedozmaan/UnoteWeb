@@ -3,15 +3,15 @@
     <md-button class="md-icon-button" aria-label="menu" ng-click="vm.toggle()">
       <md-icon md-svg-icon="menu"></md-icon>
     </md-button>
-    <span class="title">Unote</span>
   </div>
-  <md-tabs md-selected="vm.index">
-    <md-tab ng-repeat="tab in vm.tabs" ui-sref="{{tab.state}}">{{tab.name}}</md-tab>
-  </md-tabs>
+  <div class="md-toolbar-tools md-toolbar-tools-bottom">
+    <h1 class="title md-display-3">University Note</h1>
+  </div>
+
 </md-toolbar>
 
 <sidenav></sidenav>
 
 <md-content layout-padding>
-  <div ui-view></div>
+  <div ui-view id="main"></div>
 </md-content>
