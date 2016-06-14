@@ -31,6 +31,9 @@
         templateUrl: 'classes/partials/classes.html',
         controllerAs: 'vm',
         controller: 'classesCtrl'
+      }).state('auth',{
+        url: '/auth',
+        templateUrl: 'auth/partials/auth.html'
       })
   })
 
@@ -38,11 +41,12 @@
     $mdIconProvider
       .icon("menu", "/css/svg/ic_menu_white_24px.svg", 24)
       .icon("add", "/css/svg/ic_add_white_24px.svg", 24)
+      .icon("logout", "/css/svg/ic_power_settings_black_24px.svg", 24)
   }])
 
   .config(['$mdThemingProvider', function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
-      .primaryPalette('blue')
+      .primaryPalette('brown')
       .accentPalette('red');
   }])
 

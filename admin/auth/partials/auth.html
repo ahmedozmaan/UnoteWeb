@@ -1,0 +1,29 @@
+<div layout="column" layout-align="center center" id="auth">
+  <div class="md-display-3" id="title">Unote</div>
+  <md-card class="md-whiteframe-1dp">
+
+    <div class="md-padding">
+
+      <form name='login' novalidate>
+
+        <md-input-container class="md-block">
+          <label>User name</label>
+          <input type="text" ng-model="vm.user_name" md-no-asterisk required>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Password</label>
+          <input type="password" ng-model="vm.password" md-no-asterisk required>
+        </md-input-container>
+
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-primary md-raised" ng-click="vm.login()">login</md-button>
+        </md-card-actions>
+
+      </form>
+    </div>
+
+  </md-card>
+
+
+</div>
