@@ -8,6 +8,7 @@
   function teachersCtrl($mdDialog, User) {
     var vm = this;
     vm.teachers = [];
+    vm.selected = [];
     vm.query = {
       limit: 5,
       page: 1
