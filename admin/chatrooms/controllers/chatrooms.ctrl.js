@@ -1,49 +1,51 @@
 (function() {
-    "use strict";
+  "use strict";
 
-    angular
-      .module("chatrooms")
-      .controller("chatroomsCtrl", chatroomsCtrl)
+  angular
+    .module("chatrooms")
+    .controller("chatroomsCtrl", chatroomsCtrl)
 
-    function chatroomsCtrl($mdDialog, Chatroom) {
-      var vm = this;
-      vm.classes = [];
-      vm.chatrooms = [];
-      vm.chatroom;
+  function chatroomsCtrl($mdDialog, Chatroom) {
+    var vm = this;
+    vm.chatrooms = [];
 
-      Chatroom.query().$promise.then(function(result) {
-        vm.classes = result;
-        vm.chatrooms = chatrooms(vm.classes)
+    Chatroom.query().$promise.then(function(result) {
+      vm.chatrooms = result;
+    })
+
+    vm.create = function() {
+      $mdDialog.show({
+        templateUrl: 'chatrooms/partials/chatroom.dialog.html',
+        controller: 'createChatroomDialog',
+        controllerAs: 'vm',
+        clickOutsideToClose: true
       })
+    }
 
-      vm.create = function() {
-        $mdDialog.show({
-          templateUrl: 'chatrooms/partials/chatroom.dialog.html',
-          controller:'createChatroomDialog',
-          controllerAs: 'vm',
-          clickOutsideToClose:true
-        })
-      }
-
-      vm.update = function() {
-        $mdDialog.show({
-          templateUrl: 'chatrooms/partials/chatroom.dialog.html',
-          controller:'updateChatroomDialog',
-          controllerAs: 'vm',
-          clickOutsideToClose:true
-        })
-      }
-
-      function chatrooms(array) {
-        var unique = [];
-        for (var x in array) {
-          if (array[x].name && unique.indexOf(array[x].name) === -1 ) {
-              unique.push(array[x].name)
-            }
-          }
-          return unique;
+    vm.update = function(chatroom) {
+      $mdDialog.show({
+        templateUrl: 'chatrooms/partials/chatroom.dialog.html',
+        controller: 'updateChatroomDialog',
+        controllerAs: 'vm',
+        clickOutsideToClose: true,
+        locals: {
+          chatroom: chatroom
         }
+      })
+    }
 
-      }
+    vm.delete = function(chatroom){
+      var confirm = $mdDialog.confirm()
+        .title("Delete confirmation")
+        .textContent("are you sure you want to delete " + chatroom.name + " chatroom")
+        .ariaLabel("Delete confirmation")
+        .ok("Delete")
+        .cancel("cancel");
+      $mdDialog.show(confirm).then(function(){
 
-    })();
+      })
+    }
+
+  }
+
+})();
