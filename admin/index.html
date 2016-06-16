@@ -7,6 +7,8 @@
   <meta name="viewport" content="width=device-width"/>
   <!-- angular material stylesheet -->
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
+  <!-- material icons -->
+  <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
   <!-- angular material table stylesheet -->
   <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.css"/>
   <!-- custom stylesheet -->
@@ -15,7 +17,7 @@
 
 <body>
 
-  <ui-view></ui-view>
+  <ui-view id="view"></ui-view>
 
   <!-- angular js -->
   <script src="bower_components/angular/angular.js"></script>
@@ -52,6 +54,14 @@
   <script src="classes/controllers/classes.ctrl.js"></script>
   <script src="classes/controllers/createClass.dialog.ctrl.js"></script>
   <script src="classes/services/classes.service.js"></script>
+
+  <!-- chatrooms -->
+  <script src="chatrooms/chatrooms.module.js"></script>
+  <script src="chatrooms/controllers/chatrooms.ctrl.js"></script>
+  <script src="chatrooms/controllers/createChatroom.dialog.ctrl.js"></script>
+  <script src="chatrooms/controllers/updateChatroom.dialog.ctrl.js"></script>
+  <script src="chatrooms/services/chatrooms.service.js"></script>
+
 
   <!-- sidenav -->
   <script src="sidenav/sidenav.ctrl.js"></script>

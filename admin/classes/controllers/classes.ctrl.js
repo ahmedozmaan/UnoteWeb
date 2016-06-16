@@ -8,6 +8,7 @@
   function classesCtrl($mdDialog, Clazz) {
     var vm = this;
     vm.classes = [];
+    vm.selected = [];
     vm.query = {
       limit: 5,
       page: 1
