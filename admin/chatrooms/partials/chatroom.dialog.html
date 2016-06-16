@@ -1,0 +1,21 @@
+<md-dialog aria-label="create chatroom">
+  <md-toolbar class="md-padding">create new chatroom</md-toolbar>
+  <md-dialog-content class="md-padding">
+    <md-input-container class="md-block" flex>
+      <label>chatroom name</label>
+      <input type="text" />
+    </md-input-container>
+    <md-input-container class="md-block" flex>
+      <label>classes</label>
+      <md-select ng-model="vm.chatroom.classes" multiple>
+        <md-optgroup label="classes">
+          <md-option ng-repeat="class in vm.classes | filter:vm.searchTerm">{{class.name}}</md-option>
+        </md-optgroup>
+      </md-select>
+    </md-input-container>
+  </md-dialog-content>
+  <md-dialog-actions>
+    <md-button class="md-primary" ng-click="vm.cancel()">cancel</md-button>
+    <md-button class="md-primary" ng-click="vm.save()">create</md-button>
+  </md-dialog-actions>
+</md-dialog>

@@ -1,0 +1,18 @@
+<div class="table">
+  <md-card>
+    <md-toolbar class="md-default">Chatrooms</md-toolbar>
+    <md-list>
+      <md-list-item class="secondary-button-padding" ng-repeat="chatroom in vm.chatrooms" ng-click="null">
+        <p>{{chatroom}}</p>
+        <md-button class="md-icon-button" aria-label="delete">
+          <md-icon md-svg-icon="delete"></md-icon>
+        </md-button>
+        <md-divider ng-if="!$last"></md-divider>
+      </md-list-item>
+    </md-list>
+  </md-card>
+</div>
+
+<md-button class="md-fab md-fab-bottom-right" aria-label="add" ng-click="vm.create()">
+  <md-icon md-svg-icon="add"></md-icon>
+</md-button>
