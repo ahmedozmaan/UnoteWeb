@@ -8,7 +8,7 @@
   User.$inject = ['$resource'];
 
   function User($resource){
-    return $resource('users.json', {
+    return $resource('http://localhost:3000/users', {
       id: '@id'
     }, {
       'update': {

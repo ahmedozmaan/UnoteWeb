@@ -8,7 +8,7 @@
   Chatroom.$inject = ['$resource'];
 
   function Chatroom($resource){
-    return $resource('chatrooms.json', {
+    return $resource('http://localhost:3000/chatrooms', {
       id: '@id'
     }, {
       'update': {
