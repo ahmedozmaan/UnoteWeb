@@ -17,7 +17,7 @@
       </thead>
       <tbody md-body>
         <tr md-row md-select="teacher" md-select-id="{{user_id}}" md-auto-select ng-repeat="teacher in vm.teachers  | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
-          <td md-cell>{{teacher.user_id}}</td>
+          <td md-cell>{{teacher.id}}</td>
           <td md-cell>{{teacher.name}}</td>
           <td md-cell>{{teacher.email}}</td>
           <td md-cell>{{teacher.phone}}</td>
