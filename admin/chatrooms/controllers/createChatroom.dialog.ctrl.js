@@ -7,6 +7,8 @@
 
   function createChatroomDialog($mdDialog, Clazz, Chatroom) {
     var vm = this;
+    vm.title = "create new chatroom"
+    vm.action = "create"
     vm.chatroom = {};
     vm.classes = [];
     vm.searchTerm = "";
@@ -20,7 +22,6 @@
     }
 
     vm.save = function() {
-      console.log(vm.classes);
       $mdDialog.cancel();
     }
 

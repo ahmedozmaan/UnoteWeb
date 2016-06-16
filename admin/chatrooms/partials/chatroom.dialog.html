@@ -1,9 +1,9 @@
-<md-dialog aria-label="create chatroom">
-  <md-toolbar class="md-padding">create new chatroom</md-toolbar>
+<md-dialog aria-label="{{vm.title}}">
+  <md-toolbar class="md-padding">{{vm.title}}</md-toolbar>
   <md-dialog-content class="md-padding">
     <md-input-container class="md-block" flex>
       <label>chatroom name</label>
-      <input type="text" />
+      <input type="text" ng-model="vm.chatroom.name"/>
     </md-input-container>
     <md-input-container class="md-block" flex>
       <label>classes</label>
@@ -16,6 +16,6 @@
   </md-dialog-content>
   <md-dialog-actions>
     <md-button class="md-primary" ng-click="vm.cancel()">cancel</md-button>
-    <md-button class="md-primary" ng-click="vm.save()">create</md-button>
+    <md-button class="md-primary" ng-click="vm.save()">{{vm.action}}</md-button>
   </md-dialog-actions>
 </md-dialog>
