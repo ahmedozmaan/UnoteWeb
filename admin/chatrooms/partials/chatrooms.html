@@ -2,9 +2,9 @@
   <md-card>
     <md-toolbar class="md-default">Chatrooms</md-toolbar>
     <md-list>
-      <md-list-item class="secondary-button-padding" ng-repeat="chatroom in vm.chatrooms" ng-click="null">
-        <p>{{chatroom}}</p>
-        <md-button class="md-icon-button" aria-label="delete">
+      <md-list-item class="secondary-button-padding" ng-repeat="chatroom in vm.chatrooms" ng-click="vm.update(chatroom)">
+        <p>{{chatroom.name}}</p>
+        <md-button class="md-icon-button" aria-label="delete" ng-click="vm.delete(chatroom)">
           <md-icon md-svg-icon="delete"></md-icon>
         </md-button>
         <md-divider ng-if="!$last"></md-divider>
