@@ -6,13 +6,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width"/>
   <!-- angular material stylesheet -->
-  <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
+  <link rel="stylesheet" href="admin/bower_components/angular-material/angular-material.min.css"/>
   <!-- material icons -->
   <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
   <!-- angular material table stylesheet -->
-  <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.css"/>
+  <link rel="stylesheet" href="admin/bower_components/angular-material-data-table/dist/md-data-table.css"/>
   <!-- custom stylesheet -->
-  <link rel="stylesheet" href="/css/style.css" media="screen" title="no title" charset="utf-8"/>
+  <link rel="stylesheet" href="admin/css/style.css" media="screen" title="no title" charset="utf-8"/>
 </head>
 
 <body>
@@ -20,56 +20,57 @@
   <ui-view id="view"></ui-view>
 
   <!-- angular js -->
-  <script src="bower_components/angular/angular.js"></script>
+  <script src="admin/bower_components/angular/angular.js"></script>
   <!-- ngResouce -->
-  <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+  <script src="admin/bower_components/angular-resource/angular-resource.min.js"></script>
 
   <!-- angular material and its Dependencies -->
-  <script src="bower_components/angular-animate/angular-animate.js"></script>
-  <script src="bower_components/angular-aria/angular-aria.js"></script>
-  <script src="bower_components/angular-messages/angular-messages.js"></script>
-  <script src="bower_components/angular-material/angular-material.js"></script>
+  <script src="admin/bower_components/angular-animate/angular-animate.js"></script>
+  <script src="admin/bower_components/angular-aria/angular-aria.js"></script>
+  <script src="admin/bower_components/angular-messages/angular-messages.js"></script>
+  <script src="admin/bower_components/angular-material/angular-material.js"></script>
 
   <!-- ui-router -->
-  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="admin/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
   <!-- angular material table -->
-  <script src="bower_components/angular-material-data-table/dist/md-data-table.js"></script>
+  <script src="admin/bower_components/angular-material-data-table/dist/md-data-table.js"></script>
 
   <!-- our main module -->
-  <script src="app.module.js"></script>
+  <script src="admin/app.module.js"></script>
 
   <!-- users -->
-  <script src="users/users.module.js"></script>
-  <script src="users/controllers/users.ctrl.js"></script>
-  <script src="users/controllers/students.ctrl.js"></script>
-  <script src="users/controllers/createStduent.dialog.ctrl.js"></script>
-  <script src="users/controllers/teachers.ctrl.js"></script>
-  <script src="users/controllers/createTeacher.dialog.ctrl.js"></script>
-  <script src="users/services/users.service.js"></script>
-
+  <script src="admin/users/users.module.js"></script>
+  <script src="admin/users/controllers/students.ctrl.js"></script>
+  <script src="admin/users/controllers/createStudent.dialog.ctrl.js"></script>
+  <script src="admin/users/controllers/updateStudent.dialog.ctrl.js"></script>
+  <script src="admin/users/controllers/teachers.ctrl.js"></script>
+  <script src="admin/users/controllers/createTeacher.dialog.ctrl.js"></script>
+  <script src="admin/users/controllers/updateTeacher.dialog.ctrl.js"></script>
+  <script src="admin/users/services/students.service.js"></script>
+  <script src="admin/users/services/teachers.service.js"></script>  
 
   <!-- classes -->
-  <script src="classes/classes.module.js"></script>
-  <script src="classes/controllers/classes.ctrl.js"></script>
-  <script src="classes/controllers/createClass.dialog.ctrl.js"></script>
-  <script src="classes/services/classes.service.js"></script>
+  <script src="admin/classes/classes.module.js"></script>
+  <script src="admin/classes/controllers/classes.ctrl.js"></script>
+  <script src="admin/classes/controllers/createClass.dialog.ctrl.js"></script>
+  <script src="admin/classes/services/classes.service.js"></script>
 
   <!-- chatrooms -->
-  <script src="chatrooms/chatrooms.module.js"></script>
-  <script src="chatrooms/controllers/chatrooms.ctrl.js"></script>
-  <script src="chatrooms/controllers/createChatroom.dialog.ctrl.js"></script>
-  <script src="chatrooms/controllers/updateChatroom.dialog.ctrl.js"></script>
-  <script src="chatrooms/services/chatrooms.service.js"></script>
+  <script src="admin/chatrooms/chatrooms.module.js"></script>
+  <script src="admin/chatrooms/controllers/chatrooms.ctrl.js"></script>
+  <script src="admin/chatrooms/controllers/createChatroom.dialog.ctrl.js"></script>
+  <script src="admin/chatrooms/controllers/updateChatroom.dialog.ctrl.js"></script>
+  <script src="admin/chatrooms/services/chatrooms.service.js"></script>
 
 
   <!-- sidenav -->
-  <script src="sidenav/sidenav.ctrl.js"></script>
-  <script src="sidenav/sidenav.directive.js"></script>
+  <script src="admin/sidenav/sidenav.ctrl.js"></script>
+  <script src="admin/sidenav/sidenav.directive.js"></script>
 
   <!-- toolbar -->
-  <script src="toolbar/toolbar.ctrl.js"></script>
-  <script src="toolbar/toolbar.directive.js"></script>
+  <script src="admin/toolbar/toolbar.ctrl.js"></script>
+  <script src="admin/toolbar/toolbar.directive.js"></script>
 
 </body>
 

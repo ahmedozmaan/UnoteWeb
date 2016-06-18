@@ -24,9 +24,12 @@ md-icon + span {
   height: 120px;
 }
 
-md-dialog > md-toolbar {
+md-dialog > md-toolbar, md-card > md-toolbar {
   background-color: #ffffff !important;
   color: rgba(0, 0, 0, 0.87) !important;
+}
+.md-default{
+  padding: 24px;
 }
 #view, #auth{
   height: 100%;

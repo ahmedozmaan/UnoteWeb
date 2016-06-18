@@ -5,7 +5,7 @@
     .module("users")
     .controller("teachersCtrl", teachersCtrl);
 
-  function teachersCtrl($mdDialog, User) {
+  function teachersCtrl($mdDialog, TeacherR) {
     var vm = this;
     vm.teachers = [];
     vm.selected = [];
@@ -14,16 +14,41 @@
       page: 1
     };
 
-    User.query().$promise.then(function(data) {
+    TeacherR.query().$promise.then(function(data) {
       vm.teachers = data;
     })
 
     vm.create = function() {
       $mdDialog.show({
-        templateUrl: 'users/partials/createTeacher.dialog.html',
+        templateUrl: 'admin/users/partials/createTeacher.dialog.html',
         controller:'createTeacherDialog',
         controllerAs: 'vm',
         clickOutsideToClose:true
+      })
+    }
+
+    vm.update = function(teacher) {
+      $mdDialog.show({
+        templateUrl: 'admin/users/partials/createTeacher.dialog.html',
+        controller:'updateTeacherDialog',
+        controllerAs: 'vm',
+        clickOutsideToClose:true,
+        locals: {
+          Teacher: teacher
+        }
+      })
+    }
+
+    vm.delete = function(teachers) {
+      var confirm = $mdDialog.confirm()
+        .title("Delete confirmation")
+        .textContent("are you sure you want to delete " + teachers.length + " teachers")
+        .ariaLabel("Delete confirmation")
+        .ok("Delete")
+        .cancel("cancel");
+
+      $mdDialog.show(confirm).then(function() {
+
       })
     }
 

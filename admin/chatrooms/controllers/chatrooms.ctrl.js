@@ -15,7 +15,7 @@
 
     vm.create = function() {
       $mdDialog.show({
-        templateUrl: 'chatrooms/partials/chatroom.dialog.html',
+        templateUrl: 'admin/chatrooms/partials/chatroom.dialog.html',
         controller: 'createChatroomDialog',
         controllerAs: 'vm',
         clickOutsideToClose: true
@@ -24,7 +24,7 @@
 
     vm.update = function(chatroom) {
       $mdDialog.show({
-        templateUrl: 'chatrooms/partials/chatroom.dialog.html',
+        templateUrl: 'admin/chatrooms/partials/chatroom.dialog.html',
         controller: 'updateChatroomDialog',
         controllerAs: 'vm',
         clickOutsideToClose: true,

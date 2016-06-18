@@ -8,7 +8,7 @@
   Clazz.$inject = ['$resource'];
 
   function Clazz($resource){
-    return $resource('http://localhost:3000/classes', {
+    return $resource('http://localhost:8000/v1/classes', {
       id: '@id'
     }, {
       'update': {
