@@ -1,5 +1,5 @@
 <md-dialog>
-  <md-toolbar class="md-padding">Register new teacher</md-toolbar>
+  <md-toolbar class="md-padding">{{vm.title}}</md-toolbar>
   <md-dialog-content class="md-padding">
       <md-input-container class="md-block">
         <label>Name</label>
@@ -16,6 +16,6 @@
   </md-dialog-content>
   <md-dialog-actions>
     <md-button class="md-primary" ng-click="vm.cancel()">cancel</md-button>
-    <md-button class="md-primary" ng-click="vm.save()">create</md-button>
+    <md-button class="md-primary" ng-click="vm.save()">{{vm.action}}</md-button>
   </md-dialog-actions>
 </md-dialog>

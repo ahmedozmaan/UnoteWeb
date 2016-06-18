@@ -27,6 +27,31 @@
       })
     }
 
+    vm.update = function(student) {
+      $mdDialog.show({
+        templateUrl: 'users/partials/createStudent.dialog.html',
+        controller:'updateStudentDialog',
+        controllerAs: 'vm',
+        clickOutsideToClose:true,
+        locals: {
+          Student : student
+        }
+      })
+    }
+
+    vm.delete = function(students) {
+      var confirm = $mdDialog.confirm()
+        .title("Delete confirmation")
+        .textContent("are you sure you want to delete " + vm.selected.length + " students")
+        .ariaLabel("Delete confirmation")
+        .ok("Delete")
+        .cancel("cancel");
+
+      $mdDialog.show(confirm).then(function() {
+
+      })
+    }
+
   }
 
 })();

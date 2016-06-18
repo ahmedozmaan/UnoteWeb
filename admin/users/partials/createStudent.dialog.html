@@ -1,5 +1,5 @@
 <md-dialog>
-  <md-toolbar class="md-padding">Register new student</md-toolbar>
+  <md-toolbar class="md-padding">{{vm.title}}</md-toolbar>
   <md-dialog-content class="md-padding">
     <div layout-gt-xs="row">
       <md-input-container class="md-block" flex>
@@ -9,7 +9,7 @@
       <md-input-container class="md-block">
         <label>Class</label>
         <md-select ng-model="vm.student.class">
-          <md-option>BT3</md-option>
+          <md-option ng-repeat="class in vm.classes">{{class.name}}</md-option>
         </md-select>
       </md-input-container>
       </div>
@@ -24,6 +24,6 @@
   </md-dialog-content>
   <md-dialog-actions>
     <md-button class="md-primary" ng-click="vm.cancel()">cancel</md-button>
-    <md-button class="md-primary" ng-click="vm.save()">create</md-button>
+    <md-button class="md-primary" ng-click="vm.save()">{{vm.action}}</md-button>
   </md-dialog-actions>
 </md-dialog>

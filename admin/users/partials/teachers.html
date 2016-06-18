@@ -1,7 +1,20 @@
 <md-card class="table">
-  <md-toolbar class="md-table-toolbar">
+  <md-toolbar class="md-table-toolbar" ng-show="!vm.selected.length">
     <div class="md-toolbar-tools">
       <span>teachers</span>
+    </div>
+  </md-toolbar>
+
+  <md-toolbar class="md-table-toolbar alternate" ng-show="vm.selected.length">
+    <div class="md-toolbar-tools">
+      {{vm.selected.length}} {{vm.selected.length > 1 ? "Teachers" : "Teacher"}} selected
+      <div flex></div>
+      <md-button  class="md-icon-button" aria-label="edit" ng-hide="vm.selected.length > 1" ng-click="vm.update(vm.selected[0])">
+        <md-icon md-svg-icon="edit"></md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="disable" ng-click="vm.delete(vm.selected)">
+        <md-icon md-svg-icon="delete"></md-icon>
+      </md-button>
     </div>
   </md-toolbar>
 
