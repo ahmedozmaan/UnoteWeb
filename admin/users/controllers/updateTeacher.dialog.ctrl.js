@@ -5,7 +5,7 @@
     .module("users")
     .controller("updateTeacherDialog", updateTeacherDialog);
 
-  function updateTeacherDialog($mdDialog, Teacher) {
+  function updateTeacherDialog($mdDialog, Teacher, TeacherR) {
     var vm = this;
     vm.title = "update Teacher";
     vm.action = "update";

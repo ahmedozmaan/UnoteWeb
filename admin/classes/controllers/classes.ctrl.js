@@ -20,7 +20,7 @@
 
     vm.create = function() {
       $mdDialog.show({
-        templateUrl: 'classes/partials/createClass.dialog.html',
+        templateUrl: 'admin/classes/partials/createClass.dialog.html',
         controller:'createClassDialog',
         controllerAs: 'vm',
         clickOutsideToClose:true

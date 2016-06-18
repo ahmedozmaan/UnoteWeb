@@ -5,10 +5,10 @@
     .module("users")
     .controller("createStudentDialog", createStudentDialog);
 
-  function createStudentDialog($mdDialog, User, Clazz) {
+  function createStudentDialog($mdDialog, Clazz, StudentR) {
     var vm = this;
     vm.title = "update student";
-    vm.action = "update";
+    vm.action = "create";
     vm.student = {};
     vm.classes = [];
 
@@ -21,6 +21,8 @@
     }
 
     vm.save = function() {
+      StudentR.save(vm.student);
+      console.log(vm.student);
       $mdDialog.cancel();
     }
 

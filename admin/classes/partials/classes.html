@@ -10,14 +10,14 @@
       <thead md-head>
         <tr md-row>
           <th md-column>Class</th>
-          <th md-column>Faculty</th>
+          <th md-column>Department</th>
           <th md-column>Level</th>
         </tr>
       </thead>
       <tbody md-body>
         <tr md-row md-select="class" md-select-id="{{class.name}}" md-auto-select ng-repeat="class in vm.classes | limitTo: vm.query.limit : (vm.query.page -1) * vm.query.limit">
           <td md-cell>{{class.name}}</td>
-          <td md-cell>{{class.faculty}}</td>
+          <td md-cell>{{class.department}}</td>
           <td md-cell>{{class.level}}</td>
         </tr>
       </tbody>

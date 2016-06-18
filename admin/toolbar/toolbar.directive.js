@@ -9,7 +9,7 @@
     return {
       restrict: 'E',
       scope: {},
-      templateUrl: 'toolbar/toolbar.html',
+      templateUrl: 'admin/toolbar/toolbar.html',
       controller: 'toolbarCtrl',
         controllerAs: 'vm',
     }

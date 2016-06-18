@@ -9,7 +9,7 @@
     return {
       restrict: 'E',
       scope: {},
-      templateUrl: 'sidenav/sidenav.html',
+      templateUrl: 'admin/sidenav/sidenav.html',
       controller: 'sidenavCtrl',
         controllerAs: 'vm',
     }

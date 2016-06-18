@@ -5,7 +5,7 @@
     .module("users")
     .controller("createTeacherDialog", createTeacherDialog);
 
-  function createTeacherDialog($mdDialog, User) {
+  function createTeacherDialog($mdDialog, TeacherR) {
     var vm = this;
     vm.title = "Register new Teacher";
     vm.action = "create";
