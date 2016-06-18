@@ -17,36 +17,20 @@ class DbHandler {
         $db = new DbConnect();
         $this->conn = $db->connect();
     }
-
-    // creating new user if not existed
-    public function createUser($name, $email) {
+     // creating new user if not existed
+    public function fechUser($phone) {
         $response = array();
 
         // First check if user already existed in db
-        if (!$this->isUserExists($email)) {
-            // insert query
-            $stmt = $this->conn->prepare("INSERT INTO users(name, email) values(?, ?)");
-            $stmt->bind_param("ss", $name, $email);
-
-            $result = $stmt->execute();
-
-            $stmt->close();
-
-            // Check for successful insertion
-            if ($result) {
-                // User successfully inserted
-                $response["error"] = false;
-                $response["user"] = $this->getUserByEmail($email);
-            } else {
+        if (!$this->isUserExists($phone)) {
                 // Failed to create user
                 $response["error"] = true;
-                $response["message"] = "Oops! An error occurred while registereing";
+                $response["message"] = "Oops! An error occurred while feching users";
+            } else {
+                // User with same email already existed in the db
+                $response["error"] = false;
+                $response["user"] = $this->getUserByPhone($phone);
             }
-        } else {
-            // User with same email already existed in the db
-            $response["error"] = false;
-            $response["user"] = $this->getUserByEmail($email);
-        }
 
         return $response;
     }
@@ -74,16 +58,18 @@ class DbHandler {
 
     // fetching single user by id
     public function getUser($user_id) {
-        $stmt = $this->conn->prepare("SELECT user_id, name, email, gcm_registration_id, created_at FROM users WHERE user_id = ?");
+        $stmt = $this->conn->prepare("SELECT user_id, name, email, phone, clazz, gcm_registration_id, created_at FROM users WHERE user_id = ?");
         $stmt->bind_param("s", $user_id);
         if ($stmt->execute()) {
             // $user = $stmt->get_result()->fetch_assoc();
-            $stmt->bind_result($user_id, $name, $email, $gcm_registration_id, $created_at);
+            $stmt->bind_result($user_id, $name, $email,$phone,$clazz, $gcm_registration_id, $created_at);
             $stmt->fetch();
             $user = array();
             $user["user_id"] = $user_id;
             $user["name"] = $name;
             $user["email"] = $email;
+            $user["phone"] = $phone;
+            $user["clazz"] = $clazz;
             $user["gcm_registration_id"] = $gcm_registration_id;
             $user["created_at"] = $created_at;
             $stmt->close();
@@ -127,27 +113,32 @@ class DbHandler {
     }
 
     // messaging in a chat room / to persional message
-    public function addMessage($user_id, $chat_room_id, $message) {
+    public function addMessage($user_id, $chat_room_id, $message, $file_flag, $file_name, $file_size) {
         $response = array();
+        $file_link =$user_id."/".$chat_room_id."/".$file_name;
 
-        $stmt = $this->conn->prepare("INSERT INTO messages (chat_room_id, user_id, message) values(?, ?, ?)");
-        $stmt->bind_param("iis", $chat_room_id, $user_id, $message);
+        $stmt = $this->conn->prepare("INSERT INTO messages (chat_room_id, user_id, message, file_flag, file_name, file_size, file_link ) values(?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("iisisss", $chat_room_id, $user_id, $message, $file_flag, $file_name, $file_size, $file_link);
 
         if ($result = $stmt->execute()) {
             $response['error'] = false;
 
             // get the message
             $message_id = $this->conn->insert_id;
-            $stmt = $this->conn->prepare("SELECT message_id, user_id, chat_room_id, message, created_at FROM messages WHERE message_id = ?");
+            $stmt = $this->conn->prepare("SELECT message_id, user_id, chat_room_id, message, created_at, file_flag, file_name, file_size, file_link  FROM messages WHERE message_id = ?");
             $stmt->bind_param("i", $message_id);
             if ($stmt->execute()) {
-                $stmt->bind_result($message_id, $user_id, $chat_room_id, $message, $created_at);
+                $stmt->bind_result($message_id, $user_id, $chat_room_id, $message, $created_at, $file_flag, $file_name, $file_size, $file_link);
                 $stmt->fetch();
                 $tmp = array();
                 $tmp['message_id'] = $message_id;
                 $tmp['chat_room_id'] = $chat_room_id;
                 $tmp['message'] = $message;
                 $tmp['created_at'] = $created_at;
+                $tmp['file_flag'] = $file_flag;
+                $tmp['file_name'] = $file_name;
+                $tmp['file_size'] = $file_size;
+                $tmp['file_link'] = $file_link;
                 $response['message'] = $tmp;
             }
         } else {
@@ -160,7 +151,18 @@ class DbHandler {
 
     // fetching all chat rooms
     public function getAllChatRooms() {
-      $query = "SELECT chat_room_id, name, created_at FROM chat_rooms WHERE 1";
+      $query = "SELECT chat_room_id, name, created_at FROM chat_rooms  ORDER BY chat_room_id ASC";
+        if ($result = mysqli_query($this->conn, $query)) {
+            return $result;
+            mysqli_free_result($result);
+        }
+    }
+    /*fechingall chatroooms using the costom way*/
+    public function getAllStChatRooms($clazz) {
+      $query = "SELECT chat_room_id, name, created_at FROM chat_rooms WHERE name IN (SELECT clazz_name FROM clazz WHERE  clazz_name = '$clazz')
+            OR name IN (SELECT clazz_department FROM clazz WHERE  clazz_name = '$clazz')
+            OR name IN (SELECT clazz_level FROM clazz WHERE  clazz_name = '$clazz')
+            OR name IN ('University')";
         if ($result = mysqli_query($this->conn, $query)) {
             return $result;
             mysqli_free_result($result);
@@ -185,36 +187,40 @@ class DbHandler {
     }
 
     /**
-     * Checking for duplicate user by email address
-     * @param String $email email to check in db
+     * Checking for duplicate user by phone address
+     * @param String $phone phone to check in db
      * @return boolean
      */
-    public function isUserExists($email) {
-        $query = "SELECT user_id from users WHERE email = '$email'";
-       if ($result = mysqli_query($this->conn, $query)) {
-            //return $result;
-            return 1;
-            mysqli_free_result($result);   
-        }else {
-            return 0;
-        }
+    public function isUserExists($phone) {
+        $stmt = $this->conn->prepare("SELECT user_id from users WHERE phone = ?");
+        $stmt->bind_param("s", $phone);
+        $stmt->execute();
+        $stmt->store_result();
+        $num_rows = $stmt->num_rows;
+        $stmt->close();
+        return $num_rows > 0;
     }
-
     /**
-     * Fetching user by email
-     * @param String $email User email id
+     * Fetching user by phone
+     * @param String $phone User phone id
      */
-    public function getUserByEmail($email) {
-        $stmt = $this->conn->prepare("SELECT user_id, name, email, created_at FROM users WHERE email = ?");
-        $stmt->bind_param("s", $email);
+    public function getUserByPhone($phone) {
+        $stmt = $this->conn->prepare("SELECT user_id, name, email, phone, clazz, created_at FROM users WHERE phone = ?");
+        $stmt->bind_param("s", $phone);
         if ($stmt->execute()) {
             // $user = $stmt->get_result()->fetch_assoc();
-            $stmt->bind_result($user_id, $name, $email, $created_at);
+            $stmt->bind_result($user_id, $name, $email, $phone, $clazz, $created_at);
             $stmt->fetch();
             $user = array();
             $user["user_id"] = $user_id;
             $user["name"] = $name;
             $user["email"] = $email;
+            $user["phone"] = $phone;
+            if($clazz ==''){
+            $user["clazz"] = "ALL";
+            }else{
+            $user["clazz"] = $clazz;
+            }
             $user["created_at"] = $created_at;
             $stmt->close();
             return $user;
@@ -222,6 +228,81 @@ class DbHandler {
             return NULL;
         }
     }
+
+/////////////////////////////////////////////////////////////////////////
+
+
+// retuns student list
+      public function getStudents() {
+      $query = "SELECT user_id, name, email, phone, clazz FROM users WHERE clazz !='' ORDER BY user_id ASC";
+        if ($result = mysqli_query($this->conn, $query)) {
+            return $result;
+            mysqli_free_result($result);
+        }
+    }
+
+    // retuns teacher list
+    public function getTeachers() {
+    $query = "SELECT user_id, name, email, phone FROM users WHERE clazz ='' ORDER BY user_id ASC";
+        if ($result = mysqli_query($this->conn, $query)) {
+        return $result;
+        mysqli_free_result($result);
+        }
+    }
+
+    // retuns classes list
+    public function getClasses() {
+    $query = "SELECT * FROM clazz";
+        if ($result = mysqli_query($this->conn, $query)) {
+        return $result;
+        mysqli_free_result($result);
+        }
+    }
+
+    // retuns chatrooms list
+    public function getChatrooms() {
+    $query = "SELECT * FROM chat_rooms";
+        if ($result = mysqli_query($this->conn, $query)) {
+        return $result;
+        mysqli_free_result($result);
+        }
+    }
+
+    public function registerStudent($name, $email, $clazz, $phone) {
+        $response = array();
+
+        $stmt = $this->conn->prepare("INSERT INTO users (name, email, clazz, phone ) values(?, ?, ?, ?)");
+        $stmt->bind_param('ssss', $name, $email, $clazz, $phone);
+
+        if ($result = $stmt->execute()) {
+            $response['error'] = false;
+
+
+        }else {
+            $response['error'] = true;
+            $response['message'] = 'Failed to create user ' . $stmt->error;
+        }
+
+        return $response;
+    }
+
+    public function registerTeacher($name, $email, $phone) {
+        $response = array();
+
+        $stmt = $this->conn->prepare("INSERT INTO users(name, email, phone) values(?, ?, ?)");
+        $stmt->bind_param('sss', $name, $email, $phone);
+
+        if ($result = $stmt->execute()) {
+            $response['error'] = false;
+        } else {
+            $response['error'] = true;
+            $response['message'] = 'Failed to create user ' . $stmt->error;
+        }
+
+        return $response;
+    }
+
+/////////////////////////////////////////////////////////////////////////
 
 }
 

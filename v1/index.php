@@ -10,20 +10,17 @@ require '.././libs/Slim/Slim.php';
 
 $app = new \Slim\Slim();
 
+
 // User login
 $app->post('/user/login', function() use ($app) {
     // check for required params
-    verifyRequiredParams(array('name', 'email'));
+    verifyRequiredParams(array('phone'));
 
     // reading post params
-    $name = $app->request->post('name');
-    $email = $app->request->post('email');
-
-    // validating email address
-    validateEmail($email);
+    $phone = $app->request->post('phone');
 
     $db = new DbHandler();
-    $response = $db->createUser($name, $email);
+    $response = $db->fechUser($phone);
 
     // echo json response
     echoRespnse(200, $response);
@@ -46,7 +43,34 @@ $app->put('/user/:id', function($user_id) use ($app) {
 
     echoRespnse(200, $response);
 });
+/* * *
+ * fetching all chat rooms
+ */
+$app->post('/user_chat_rooms', function() use ($app){
 
+    verifyRequiredParams(array('clazz'));
+
+    $clazz = $app->request->post('clazz');
+    // fetching all user tasks
+
+    $response = array();
+    $db = new DbHandler();
+    $result = $db->getAllStChatRooms($clazz);
+
+    $response["error"] = false;
+    $response["chat_rooms"] = array();
+
+    // pushing single chat room into array
+    while ($chat_room = $result->fetch_assoc()) {
+        $tmp = array();
+        $tmp["chat_room_id"] = $chat_room["chat_room_id"];
+        $tmp["name"] = $chat_room["name"];
+        $tmp["created_at"] = $chat_room["created_at"];
+        array_push($response["chat_rooms"], $tmp);
+    }
+
+    echoRespnse(200, $response);
+});
 /* * *
  * fetching all chat rooms
  */
@@ -80,12 +104,16 @@ $app->post('/chat_rooms/:id/message', function($chat_room_id) {
     global $app;
     $db = new DbHandler();
 
-    verifyRequiredParams(array('user_id', 'message'));
+    verifyRequiredParams(array('user_id','user_name', 'message', 'file_flag', 'file_name', 'file_size'));
 
     $user_id = $app->request->post('user_id');
+    $user_name = $app->request->post('user_name');
     $message = $app->request->post('message');
+    $file_flag = $app->request->post('file_flag');
+    $file_name = $app->request->post('file_name');
+    $file_size = $app->request->post('file_size');
 
-    $response = $db->addMessage($user_id, $chat_room_id, $message);
+    $response = $db->addMessage($user_id, $chat_room_id, $message, $file_flag, $file_name, $file_size);
 
     if ($response['error'] == false) {
         require_once __DIR__ . '/../libs/gcm/gcm.php';
@@ -94,21 +122,23 @@ $app->post('/chat_rooms/:id/message', function($chat_room_id) {
         $push = new Push();
 
         // get the user using userid
-        $user = $db->getUser($user_id);
-
+        //$user = $db->getUser($user_id);
+        $user = array();
+        $user["sender_id"] = $user_id;
+        $user["sender_name"] = $user_name;
         $data = array();
         $data['user'] = $user;
         $data['message'] = $response['message'];
-        $data['chat_room_id'] = $chat_room_id;
+        //$data['chat_room_id'] = $chat_room_id;
 
-        $push->setTitle("Google Cloud Messaging");
+        $push->setTitle("UNIVERSITY NOTE MESSAGING");
         $push->setIsBackground(FALSE);
         $push->setFlag(PUSH_FLAG_CHATROOM);
         $push->setData($data);
 
         // echo json_encode($push->getPush());exit;
         // sending push message to a topic
-        $gcm->sendToTopic('topic_' . $chat_room_id, $push->getPush());
+        $gcm->sendToTopic($chat_room_id, $push->getPush());
 
         $response['user'] = $user;
         $response['error'] = false;
@@ -138,7 +168,7 @@ $app->post('/users/:id/message', function($to_user_id) {
 
     $fromuser = $db->getUser($from_user_id);
     $user = $db->getUser($to_user_id);
-    
+
     $msg = array();
     $msg['message'] = $message;
     $msg['message_id'] = '';
@@ -150,7 +180,7 @@ $app->post('/users/:id/message', function($to_user_id) {
     $data['message'] = $msg;
     $data['image'] = '';
 
-    $push->setTitle("Google Cloud Messaging");
+    $push->setTitle("UNIVERSITY NOTE MESSAGING");
     $push->setIsBackground(FALSE);
     $push->setFlag(PUSH_FLAG_USER);
     $push->setData($data);
@@ -349,7 +379,7 @@ $app->get('/chat_rooms/:id', function($chat_room_id) {
 
         $response["error"] = "false";
         $response["messages"]= array();
-        $response['chat_room'] = array(); 
+        $response['chat_room'] = array();
         $messages =  $db->getChatRoomsMessages($chat_room_id);
         $chat_room  = $db->getChatRoom($chat_room_id);
         foreach ($messages as $key => $message) {
@@ -367,7 +397,7 @@ $app->get('/chat_rooms/:id', function($chat_room_id) {
 
                 array_push($response["messages"], $cmt);
         }
-         
+
         foreach ($chat_room as $key => $room) {
             $tmp = array();
                 $tmp["chat_room_id"] = $room["chat_room_id"];
@@ -378,6 +408,136 @@ $app->get('/chat_rooms/:id', function($chat_room_id) {
 
     echoRespnse(200, $response);
 });
+
+////////////////////////////////////////////////////////////////////////
+$app->get('/users/students', function() {
+    $response = array();
+    $db = new DbHandler();
+
+    // fetching all user tasks
+    $result = $db->getStudents();
+
+    if (!$result) {
+        throw new Exception("Database Error");
+    }
+
+    while ($student = $result->fetch_assoc()) {
+        $tmp = array();
+
+        $tmp["id"] = $student["user_id"];
+        $tmp["name"] = $student["name"];
+        $tmp["email"] = $student["email"];
+        $tmp["class"] = $student["clazz"];
+        $tmp["phone"] = $student["phone"];
+        array_push($response, $tmp);
+    }
+
+    echoRespnse(200, $response);
+});
+
+$app->get('/users/teachers', function() {
+    $response = array();
+    $db = new DbHandler();
+
+    $result = $db->getTeachers();
+
+
+    while ($teacher = $result->fetch_assoc()) {
+        $tmp = array();
+
+        $tmp["id"] = $teacher["user_id"];
+        $tmp["name"] = $teacher["name"];
+        $tmp["email"] = $teacher["email"];
+        $tmp["phone"] = $teacher["phone"];
+        array_push($response, $tmp);
+    }
+
+    echoRespnse(200, $response);
+});
+
+$app->get('/classes', function() {
+    $response = array();
+    $db = new DbHandler();
+
+    $result = $db->getClasses();
+
+
+    while ($classes = $result->fetch_assoc()) {
+        $tmp = array();
+
+        $tmp["name"] = $classes["clazz_name"];
+        $tmp["department"] = $classes["clazz_department"];
+        $tmp["level"] = $classes["clazz_level"];
+        array_push($response, $tmp);
+    }
+
+    echoRespnse(200, $response);
+});
+
+$app->get('/chatrooms', function() {
+    $response = array();
+
+    $db = new DbHandler();
+
+    $result = $db->getChatRooms();
+
+
+    while ($chatrooms = $result->fetch_assoc()) {
+        $temp = array();
+        $temp["name"] = $chatrooms["name"];
+        $temp["classes"] = $chatrooms["classes"];
+        array_push($response, $temp);
+    }
+
+    echoRespnse(200, $response);
+});
+
+function console_log( $data ){
+  echo '<script>';
+  echo 'console.log('. json_encode( $data ) .')';
+  echo '</script>';
+}
+
+$app->post('/users/students', function() {
+    global $app;
+    $db = new DbHandler();
+
+    verifyRequiredParams(array('name', 'email', 'class', 'phone'));
+
+    $name = $app->request->post('name');
+    $email = $app->request->post('email');
+    $clazz = $app->request->post('class');
+    $phone = $app->request->post('phone');
+
+    $response = $db->registerStudent($name, $email, $clazz, $phone);
+
+    if ($response['error'] == false) {
+        $response['error'] = false;
+    }
+
+    echoRespnse(200, $response);
+});
+
+$app->post('/users/teachers', function() {
+    global $app;
+    $db = new DbHandler();
+
+    verifyRequiredParams(array('name', 'email', 'phone'));
+
+    $name = $app->request->post('name');
+    $email = $app->request->post('email');
+    $phone = $app->request->post('phone');
+    console_log($name);
+    $response = $db->registerTeacher($name, $email, $phone);
+
+    if ($response['error'] == false) {
+        $response['error'] = false;
+    }
+
+    echoRespnse(200, $response);
+});
+
+////////////////////////////////////////////////////////////////////////
 
 /**
  * Verifying required params posted or not
